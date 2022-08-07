@@ -1,0 +1,35 @@
+grid_size = int(input("enter the max number"))
+i = 1
+player_name = {1:"player 1", 2:"player 2", 3:"player 3", 4:"player 4"}
+d = {1:[], 2:[], 3:[], 4:[]}
+status = {1:0, 2:0, 3:0,  4:0}
+position = {1:[], 2:[], 3:[], 4:[]}
+num = 0
+import random, pandas as pd
+while(status!=1):
+    prev_num = position[i][-1] if len(d[i])!=0 else 0 
+    get_num = random.randint(1, 6)
+    if get_num + prev_num < grid_size*grid_size:
+      d[i].append(get_num)
+      position[i].append(get_num + prev_num)
+    if get_num + prev_num > grid_size*grid_size:
+      d[i].append(get_num)
+      position[i].append(prev_num)
+    if get_num + prev_num == grid_size*grid_size:
+      status[i] = 1
+      d[i].append(get_num)
+      position[i].append(get_num + prev_num)
+      break
+    i+=1
+    if(i>4):
+        i=1
+pd = pd.DataFrame({
+    "players":player_name, 
+    "dice roll history":d,
+    "position":position,
+    "status":status
+} )
+print(pd)
+
+
+
